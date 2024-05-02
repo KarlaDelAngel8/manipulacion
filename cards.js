@@ -5,49 +5,58 @@
 * Insertar en la tarjeta
 * Mostrar dentro de div.container
 */
-
-const CARDS_CONTAINER = document.querySelector("#card-container"); //importancia de un . o un #
+//Implementar funciones para el codigo
+const CARDS_CONTAINER = document.querySelector("#card-container");
 //const CARDS_CONTAINER = document.getElementById("card-container");
 const USER = {
     id: 1,
-    username: "User Name",
-    desc: "Sobre mi",
-    age: 25,
+    username: "Alexandra",
+    desc: "No pases desapercibido, Sé diferente al resto y denota frescura en lo que cuentas",
+    age: 27,
     fav_books: {
-        books: [
-            "Frida",
-            "Ensayo sobre mi personalidad",
-            "La mecanica del corazon",
-            "Angeles y Demonios",
-            "El pricipito",
+        books: ["Hush Hush", "Mírame y dispara", "After", "El principito", "La chica del tren",
         ],
     },
 };
 
-//CREAR TARJETA
-const card = document.createElement("div");
-const name_section = document.createElement("h3");
-const desc_section = document.createElement("p");
-const age_section = document.createElement("p");
-const book_section = document.createElement("div");
-// lista -----------------------------------------
-const booklist = USER.fav_books.books.map((e) => {
+//CREAR secciones
+function createElements(){
+    const cardObj = {
+       name_section: document.createElement("h3"),
+       desc_section: document.createElement("p"),
+       age_section: document.createElement("p"),
+       book_section: document.createElement("div"),
+
+    };
+    return cardObj;
+
+}
+//Crear tarjeta
+//Inyectando información 
+
+function injectData(obj){
+   const booklist = USER.fav_books.books.map((e) => {
     const item = document.createElement("ul");
     item.textContent = e;
     return item;
 });
 
-console.log(booklist);
+obj.name_section.textContent = USER.username;
+    obj.desc_section.textContent = USER.desc;
+    obj.age_section.textContent = USER.age;
+    obj.book_section.append(...booklist);
+    renderCard(obj);
+}
 
-//Crear tarjeta
-//Inyectando información 
-name_section.textContent = USER.username;
-desc_section.textContent = USER.desc;
-age_section.textContent = USER.age;
-book_section.append(...booklist);
-card.append(name_section, desc_section, age_section, book_section); 
-//Crear la tarjeta con esa información
-
-//Inyectar tarjeta en el container
-CARDS_CONTAINER.appendChild(card);
-
+function renderCard(cardObj){
+    const card = document.createElement("div");
+    card.append(
+        cardObj.name_section,
+        cardObj.desc_section,
+        cardObj.age_section,
+        cardObj.book_section,
+    )
+    CARDS_CONTAINER.appendChild(card);
+}
+ const cardData = createElements();
+ injectData(cardData);
